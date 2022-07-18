@@ -27,7 +27,7 @@ class MealFragment : Fragment() {
     private lateinit var mealId: String
     private lateinit var mealName: String
     private lateinit var mealThumb: String
-    private lateinit var youtubeLink: String
+    private var youtubeLink: String? = null
     private lateinit var mealViewModel: MealViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +79,10 @@ class MealFragment : Fragment() {
 
     private fun onYoutubeImageClick() {
         binding.imgYoutube.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
-            startActivity(intent)
+            youtubeLink?.let {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+                startActivity(intent)
+            }
         }
     }
 
@@ -94,7 +96,7 @@ class MealFragment : Fragment() {
                     binding.tvCategory.text = "Category: ${t!!.strCategory}"
                     binding.tvArea.text = "Area : ${t.strArea}"
                     binding.tvInstructionsSteps.text = t.strInstructions
-                    youtubeLink = t.strYoutube!!
+                    youtubeLink = t.strYoutube
                 }
 
             })

@@ -10,7 +10,7 @@ interface MealDao {
     suspend fun upsert(meal: Meal)
 
     @Delete
-    fun delete(meal: Meal)
+    suspend fun delete(meal: Meal)
 
     @Query("SELECT * FROM mealInformation")
     fun getAllMeals(): LiveData<List<Meal>>
