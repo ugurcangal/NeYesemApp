@@ -14,6 +14,7 @@ import com.ugurcangal.easyfood.activities.MainActivity
 import com.ugurcangal.easyfood.adapters.CategoriesAdapter
 import com.ugurcangal.easyfood.adapters.MostPopularAdapter
 import com.ugurcangal.easyfood.databinding.FragmentHomeBinding
+import com.ugurcangal.easyfood.fragments.bottomsheet.MealBottomSheetFragment
 import com.ugurcangal.easyfood.pojo.MealsByCategory
 import com.ugurcangal.easyfood.pojo.Meal
 import com.ugurcangal.easyfood.viewmodel.HomeViewModel
@@ -62,6 +63,26 @@ class HomeFragment : Fragment() {
         observeCategoriesLiveData()
         onCategoryClick(view)
 
+        onPopularItemLongClick()
+
+    }
+
+    private fun onPopularItemLongClick() {
+        popularItemsAdapter.onLongItemClick = {
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(it.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
+        }
+    }
+
+    private fun onPopularItemClick(view: View) {
+        popularItemsAdapter.onItemClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToMealFragment()
+            action.mealID = it.idMeal
+            action.mealName = it.strMeal
+            action.mealThumb = it.strMealThumb
+            Navigation.findNavController(view).navigate(action)
+
+        }
     }
 
     private fun onCategoryClick(view: View) {
@@ -86,17 +107,6 @@ class HomeFragment : Fragment() {
                 categoriesItemsAdapter.setCategoryList(it)
 
         })
-    }
-
-    private fun onPopularItemClick(view: View) {
-        popularItemsAdapter.onItemClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToMealFragment()
-            action.mealID = it.idMeal
-            action.mealName = it.strMeal
-            action.mealThumb = it.strMealThumb
-            Navigation.findNavController(view).navigate(action)
-
-        }
     }
 
     private fun preparePopularItemsRecyclerView() {

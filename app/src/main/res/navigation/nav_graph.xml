@@ -58,4 +58,15 @@
             app:argType="string"
             android:defaultValue='""' />
     </fragment>
+
+    <dialog
+        android:id="@+id/mealBottomSheetFragment"
+        android:name="com.ugurcangal.easyfood.fragments.bottomsheet.MealBottomSheetFragment"
+        android:label="fragment_meal_bottom_sheet"
+        tools:layout="@layout/fragment_meal_bottom_sheet" >
+        <action
+            android:id="@+id/action_mealBottomSheetFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:launchSingleTop="true" />
+    </dialog>
 </navigation>

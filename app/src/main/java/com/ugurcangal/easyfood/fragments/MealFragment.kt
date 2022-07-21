@@ -33,6 +33,12 @@ class MealFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        arguments?.let {
+            mealId = MealFragmentArgs.fromBundle(it).mealID
+            mealName = MealFragmentArgs.fromBundle(it).mealName
+            mealThumb = MealFragmentArgs.fromBundle(it).mealThumb
+        }
+
         val mealDatabase = MealDatabase.getInstance(context!!.applicationContext)
         val viewModelFactory = MealViewModelFactory(mealDatabase)
         mealViewModel = ViewModelProvider(this,viewModelFactory).get(MealViewModel::class.java)
@@ -47,15 +53,13 @@ class MealFragment : Fragment() {
         _binding = FragmentMealBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            mealId = MealFragmentArgs.fromBundle(it).mealID
-            mealName = MealFragmentArgs.fromBundle(it).mealName
-            mealThumb = MealFragmentArgs.fromBundle(it).mealThumb
-        }
+
 
 
         mealViewModel.getMealDetail(mealId)
