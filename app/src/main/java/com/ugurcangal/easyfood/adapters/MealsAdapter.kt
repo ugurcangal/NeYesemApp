@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ugurcangal.easyfood.databinding.MealItemBinding
 import com.ugurcangal.easyfood.pojo.Meal
+import com.ugurcangal.easyfood.pojo.MealsByCategory
 
-class FavoritesMealsAdapter : RecyclerView.Adapter<FavoritesMealsAdapter.FavoritesMealsViewHolder>() {
+class MealsAdapter : RecyclerView.Adapter<MealsAdapter.FavoritesMealsViewHolder>() {
+
+    lateinit var onItemClick:((Meal) -> Unit)
+
 
     inner class FavoritesMealsViewHolder(val binding : MealItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -36,6 +40,10 @@ class FavoritesMealsAdapter : RecyclerView.Adapter<FavoritesMealsAdapter.Favorit
             .load(meal.strMealThumb)
             .into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = meal.strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(meal)
+        }
 
     }
 

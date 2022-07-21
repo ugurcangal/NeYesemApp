@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ugurcangal.easyfood.adapters.CategoryMealsAdapter
 import com.ugurcangal.easyfood.databinding.FragmentCategoryMealsBinding
@@ -50,6 +52,17 @@ class CategoryMealsFragment : Fragment() {
         })
 
         prepareRecyclerView()
+        onItemClick(view)
+    }
+
+    private fun onItemClick(view: View) {
+        categoryMealsAdapter.onItemClick = {
+            val action = CategoryMealsFragmentDirections.actionCategoryMealsFragmentToMealFragment()
+            action.mealID = it.idMeal
+            action.mealName = it.strMeal
+            action.mealThumb = it.strMealThumb
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     private fun prepareRecyclerView() {

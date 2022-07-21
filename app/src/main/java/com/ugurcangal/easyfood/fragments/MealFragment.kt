@@ -75,9 +75,11 @@ class MealFragment : Fragment() {
 
     private fun onFavoriteClick() {
         binding.buttonAddFavorite.setOnClickListener {
+            binding.buttonAddFavorite.visibility = View.GONE
             mealToSave?.let { meal ->
                 mealViewModel.insertMeal(meal)
             }
+            Toast.makeText(context,"Meal Added To Favorites.",Toast.LENGTH_SHORT).show()
         }
     }
 

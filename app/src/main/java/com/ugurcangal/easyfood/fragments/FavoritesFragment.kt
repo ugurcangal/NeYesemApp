@@ -1,19 +1,18 @@
 package com.ugurcangal.easyfood.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.ugurcangal.easyfood.R
 import com.ugurcangal.easyfood.activities.MainActivity
-import com.ugurcangal.easyfood.adapters.FavoritesMealsAdapter
+import com.ugurcangal.easyfood.adapters.MealsAdapter
 import com.ugurcangal.easyfood.databinding.FragmentFavoritesBinding
 import com.ugurcangal.easyfood.viewmodel.HomeViewModel
 
@@ -22,7 +21,7 @@ class FavoritesFragment : Fragment() {
     private var _binding : FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: HomeViewModel
-    private lateinit var favoritesAdapter: FavoritesMealsAdapter
+    private lateinit var favoritesAdapter: MealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +69,22 @@ class FavoritesFragment : Fragment() {
             }
         }
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rvFavorites)
+
+        onItemClick(view)
+    }
+
+    private fun onItemClick(view: View) {
+        favoritesAdapter.onItemClick = {
+            val action = FavoritesFragmentDirections.actionFavoritesFragmentToMealFragment()
+            action.mealID = it.idMeal
+            action.mealName = it.strMeal!!
+            action.mealThumb = it.strMealThumb!!
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     private fun prepareRecyclerView() {
-        favoritesAdapter = FavoritesMealsAdapter()
+        favoritesAdapter = MealsAdapter()
         binding.rvFavorites.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = favoritesAdapter

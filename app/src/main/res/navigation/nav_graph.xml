@@ -20,17 +20,37 @@
             app:destination="@id/categoryMealsFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealBottomSheetFragment"
+            app:destination="@id/mealBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.ugurcangal.easyfood.fragments.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:popUpTo="@id/favoritesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.ugurcangal.easyfood.fragments.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_categoryMealsFragment"
+            app:destination="@id/categoryMealsFragment"
+            app:popUpTo="@id/categoriesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/mealFragment"
         android:name="com.ugurcangal.easyfood.fragments.MealFragment"
@@ -57,6 +77,9 @@
             android:name="categoryName"
             app:argType="string"
             android:defaultValue='""' />
+        <action
+            android:id="@+id/action_categoryMealsFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
     </fragment>
 
     <dialog
@@ -69,4 +92,13 @@
             app:destination="@id/mealFragment"
             app:launchSingleTop="true" />
     </dialog>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.ugurcangal.easyfood.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
+    </fragment>
 </navigation>

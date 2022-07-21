@@ -8,6 +8,7 @@ import com.ugurcangal.easyfood.databinding.MealItemBinding
 import com.ugurcangal.easyfood.pojo.MealsByCategory
 
 class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryMealsViewHolder>() {
+    lateinit var onItemClick:((MealsByCategory) -> Unit)
 
 
     class CategoryMealsViewHolder(val binding: MealItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +33,10 @@ class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryM
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = mealsList[position].strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(mealsList[position])
+        }
     }
 
     override fun getItemCount(): Int {

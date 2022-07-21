@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ugurcangal.easyfood.R
 import com.ugurcangal.easyfood.activities.MainActivity
@@ -42,6 +43,15 @@ class CategoriesFragment : Fragment() {
 
         prepareRecyclerView()
         observeCategories()
+        onItemClick(view)
+    }
+
+    private fun onItemClick(view: View) {
+        categoriesAdapter.onItemClick = {
+            val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryMealsFragment()
+            action.categoryName = it.strCategory
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     private fun observeCategories() {
