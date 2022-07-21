@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ugurcangal.easyfood.R
 import com.ugurcangal.easyfood.activities.MainActivity
 import com.ugurcangal.easyfood.databinding.FragmentMealBottomSheetBinding
+import com.ugurcangal.easyfood.fragments.HomeFragmentDirections
 import com.ugurcangal.easyfood.viewmodel.HomeViewModel
 
 private const val MEAL_ID = "param1"
@@ -51,20 +53,21 @@ class MealBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         observeBottomSheetMeal()
-        onBottomSheetDialogClick()
+        onBottomSheetDialogClick(view)
+
     }
 
 
 
-    private fun onBottomSheetDialogClick() {
-        binding.bottomSheet.setOnClickListener{
+    private fun onBottomSheetDialogClick(view: View) {
+        binding.bottomSheet.setOnClickListener {
             if (mealId != null && mealName != null && mealThumb != null){
-                val action = MealBottomSheetFragmentDirections.actionMealBottomSheetFragmentToMealFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToMealFragment()
                 action.mealID = mealId!!
                 action.mealName = mealName!!
                 action.mealThumb = mealThumb!!
-//                Navigation.findNavController(it).navigate(action) // SORUN %100 BURADA.......
-                dismiss()
+                findNavController().navigate(action)
+                dialog?.dismiss()
             }else{
                 dismiss()
             }
